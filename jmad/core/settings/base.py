@@ -93,7 +93,7 @@ TEMPLATES = [
 
 
 # WSGI CONFIGURATION
-WSGI_APPLICATION = 'jmad.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 # END WSGI CONFIGURATION
 
 
