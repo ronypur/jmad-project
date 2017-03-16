@@ -70,7 +70,7 @@ MIDDLEWARE = [
 
 
 # URL CONFIGURATION
-ROOT_URLCONF = '{}.urls'.format(SITE_NAME)
+ROOT_URLCONF = '{}.core.urls'.format(SITE_NAME)
 # END URL CONFIGURATION
 
 
