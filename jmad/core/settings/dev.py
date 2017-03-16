@@ -9,6 +9,13 @@ DEBUG = True
 # END DEBUG CONFIGURATION
 
 
+# APPLICATIONS CONFIGURATION
+INSTALLED_APPS += [
+    'apps.solos',
+]
+# END APPLICATIONS CONFIGURATION
+
+
 # DATABASE CONFIGURATION
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
