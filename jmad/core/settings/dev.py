@@ -1,5 +1,6 @@
 # include from settings/base.py
 from .base import *
+from core.helpers import get_secret
 
 
 # DEBUG CONFIGURATION
@@ -13,11 +14,11 @@ DEBUG = True
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': get_secret('DATABASE_NAME', SITE_DIR),
+        'USER': get_secret('DATABASE_USER', SITE_DIR),
+        'PASSWORD': get_secret('DATABASE_PASSWORD', SITE_DIR),
+        'HOST': 'localhost',
         'PORT': '',
     }
 }

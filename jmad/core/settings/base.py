@@ -9,6 +9,7 @@ book (https://www.twoscoopspress.com/).
 
 from os.path import abspath, basename, dirname, join
 
+from core.helpers import get_secret
 
 # PATH CONFIGURATION
 # Path for django project
@@ -22,7 +23,7 @@ SITE_NAME = basename(BASE_DIR)
 
 # SECRET CONFIGURATION
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xv)hhranl0xmdqrr+u!0a*j@9dh%e!xnbc5!)xqg4mrip)plu4'
+SECRET_KEY = get_secret('SECRET_KEY', SITE_DIR)
 # END SECRET CONFIGURATION
 
 
