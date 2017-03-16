@@ -11,5 +11,6 @@ class IndexViewTestCase(TestCase):
     def test_index_view_basic(self):
         """Test index view returns a 200 response and uses the correct template"""
         request = self.factory.get('/')
-        response = index(request)
-        self.assertEqual(response.status_code, 200)
+        with self.assertTemplateUsed('solos/index.html'):
+            response = index(request)
+            self.assertEqual(response.status_code, 200)
