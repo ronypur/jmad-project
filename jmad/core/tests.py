@@ -76,5 +76,37 @@ class StudentTestCase(LiveServerTestCase):
             '.jmad-search-result')
         self.assertEqual(len(second_search_result), 2)
 
+        # Clicking on search result
+        second_search_result[0].click()
+
+        # Redirecting to solo detail view
+        import pdb; pdb.set_trace()
+        self.assertEqual(
+            self.browser.current_url,
+            '{}/solos/2'.format(self.live_server_url))
+
+        # Seeing the artist name
+        self.assertEqual(
+            self.browser.find_element_by_css_selector('#jmad-artist').text,
+            'Cannonball Adderley')
+
+        # Seeing the instrument
+        self.assertEqual(
+            self.browser.find_element_by_css_selector('#jmad-instrument').text,
+            'saxophone')
+
+        # Seeing the track
+        self.assertEqual(
+            self.browser.find_element_by_css_selector('#jmad-track').text,
+            'All Blues')
+
+        # Seeing artist start and end time of the show
+        self.assertEqual(
+            self.browser.find_element_by_css_selector('#jmad-start-time').text,
+            '2:06')
+        self.assertEqual(
+            self.browser.find_element_by_css_selector('#jmad-end-time').text,
+            '4:01')
+
         # This test is incomplete
         self.fail('incomplete test')
