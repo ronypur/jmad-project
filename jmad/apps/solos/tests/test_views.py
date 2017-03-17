@@ -5,7 +5,7 @@ from apps.solos.models import Solo
 from apps.solos.views import index
 
 
-class IndexViewTestCase(TestCase):
+class SoloViewTestCase(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
