@@ -80,7 +80,6 @@ class StudentTestCase(LiveServerTestCase):
         second_search_result[0].click()
 
         # Redirecting to solo detail view
-        import pdb; pdb.set_trace()
         self.assertEqual(
             self.browser.current_url,
             '{}/solos/2'.format(self.live_server_url))
