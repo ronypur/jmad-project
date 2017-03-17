@@ -2,10 +2,39 @@ from django.test import TestCase, RequestFactory
 from django.db.models.query import QuerySet
 
 from apps.solos.models import Solo
-from apps.solos.views import index
+from apps.solos.views import index, SoloDetailView
 
 
 class SoloViewTestCase(TestCase):
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_basic(self):
+        """
+        Solo view return a 200 response, uses the correct template,
+        and has the correct context
+        :return:
+        """
+        request = self.factory.get('/solos/1')
+
+        response = SoloDetailView.as_view()(
+            request,
+            self.drum_solo.pk
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(
+            response.context['solo'].artist,
+            'Rich'
+        )
+
+        with self.assertTemplateUsed('solos/solo-detail.html'):
+            response.reader()
+
+
+class IndexViewTestCase(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
