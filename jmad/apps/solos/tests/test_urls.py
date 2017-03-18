@@ -14,7 +14,9 @@ class SolosURLsTestCase(TestCase):
 
     def test_solo_detail_view(self):
         """Test that the URL for SoloDetail resolve to correct view function"""
-        solo_detail = resolve('/solos/1/')
+        solo_detail = resolve('/kind-of-blue/all-blues/cannonball-adderley/')
 
         self.assertEqual(solo_detail.func.__name__, 'SoloDetailView')
-        self.assertEqual(solo_detail.kwargs['pk'], '1')
+        self.assertEqual(solo_detail.kwargs['album'], 'kind-of-blue')
+        self.assertEqual(solo_detail.kwargs['track'], 'all-blues')
+        self.assertEqual(solo_detail.kwargs['artist'], 'cannonball-adderley')
