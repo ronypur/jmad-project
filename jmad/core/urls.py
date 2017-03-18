@@ -16,13 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from apps.solos.views import index, SoloDetailView
+from apps.solos.views import index, solo_detail
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(
         r'^recordings/(?P<album>[\w-]+)/(?P<track>[\w-]+)/(?P<artist>[\w-]+)/$',
-        SoloDetailView.as_view(),
+        solo_detail,
         name='solo_detail_view'
     ),
     url(r'^$', index),

@@ -49,6 +49,14 @@ class StudentTestCase(LiveServerTestCase):
             track=self.track3, slug='cannonball-adderley'
         )
 
+        self.track4 = Track.objects.create(name='Freddie Freeloader', slug='freddie-freeloader', album=self.album2)
+        self.solo4 = Solo.objects.create(
+            instrument='trumpet', artist='Miles Davis',
+            track=self.track2, slug='miles-davis'
+        )
+
+        self.track5 = Track.objects.create(name='Blue in Green', slug='blue-in-green', album=self.album2)
+
     def tearDown(self):
         self.browser.quit()
 
