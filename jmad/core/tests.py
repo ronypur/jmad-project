@@ -3,6 +3,7 @@ from django.test import LiveServerTestCase
 from selenium import webdriver
 
 from apps.solos.models import Solo
+from apps.albums.models import Album, Track
 
 
 class StudentTestCase(LiveServerTestCase):
@@ -11,27 +12,41 @@ class StudentTestCase(LiveServerTestCase):
         self.browser = webdriver.Chrome()
         self.browser.implicitly_wait(2)
 
+        self.album1 = Album.objects.create(
+            name='My Favorite Things', slug='my-favorite-things'
+        )
+        self.track1 = Track.objects.create(
+            name='My Favorite Things', slug='my-favorite-things',
+            album=self.album1
+        )
         self.solo1 = Solo.objects.create(
-            instrument='saxophone',
-            artist='Jhon Coltrane',
-            track='My Favorite Things',
-            album='My Favorite Things'
+            instrument='saxophone', artist='Jhon Coltrane',
+            track=self.track1, slug='jhon-coltrane'
         )
 
+        self.album2 = Album.objects.create(
+            name='Kind of Blue', slug='kind-of-blue'
+        )
+        self.track2 = Track.objects.create(
+            name='All Blues', slug='all-blues',
+            album=self.album2
+        )
         self.solo2 = Solo.objects.create(
-            instrument='saxophone',
-            artist='Cannonball Adderley',
-            track='All Blues',
-            album='Kind of Blue',
-            start_time='2:06',
-            end_time='4:01'
+            instrument='saxophone', artist='Cannonball Adderley',
+            track=self.track2, start_time='2:06',
+            end_time='4:01', slug='cannonball-adderley'
         )
 
+        self.album3 = Album.objects.create(
+            name='Know What I Mean?', slug='know-what-i-mean'
+        )
+        self.track3 = Track.objects.create(
+            name='Waltz for Debby', slug='waltz-for-debby',
+            album=self.album3
+        )
         self.solo3 = Solo.objects.create(
-            instrument='saxophone',
-            artist='Cannonball Adderley',
-            track='Waltz for Debby',
-            album='Know What I Mean?'
+            instrument='saxophone', artist='Cannonball Adderley',
+            track=self.track3, slug='cannonball-adderley'
         )
 
     def tearDown(self):

@@ -19,7 +19,11 @@ from django.contrib import admin
 from apps.solos.views import index, SoloDetailView
 
 urlpatterns = [
-    url(r'^$', index),
-    url(r'^recordings/(?P<album>[\w-]+)/(?P<track>[\w-]+)/(?P<artist>[\w-]+)/$', SoloDetailView.as_view()),
     url(r'^admin/', admin.site.urls),
+    url(
+        r'^recordings/(?P<album>[\w-]+)/(?P<track>[\w-]+)/(?P<artist>[\w-]+)/$',
+        SoloDetailView.as_view(),
+        name='solo_detail_view'
+    ),
+    url(r'^$', index),
 ]

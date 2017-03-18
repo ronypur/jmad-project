@@ -50,7 +50,10 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-LOCAL_APPS = []
+LOCAL_APPS = [
+    'apps.solos',
+    'apps.albums',
+]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 # END APPLICATIONS CONFIGURATION
