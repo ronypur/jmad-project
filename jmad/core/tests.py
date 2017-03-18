@@ -8,7 +8,7 @@ from apps.solos.models import Solo
 class StudentTestCase(LiveServerTestCase):
 
     def setUp(self):
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Chrome()
         self.browser.implicitly_wait(2)
 
         self.solo1 = Solo.objects.create(
@@ -48,16 +48,12 @@ class StudentTestCase(LiveServerTestCase):
 
         # Search form, including label and placeholder is exists
         # in homepage
-        instrument_input = self.browser.find_element_by_css_selector(
-            'input#jmad-instrument')
-        self.assertIsNotNone(self.browser.find_element_by_css_selector(
-            'label[for="jmad-instrument"]'))
+        instrument_input = self.browser.find_element_by_css_selector('input#jmad-instrument')
+        self.assertIsNotNone(self.browser.find_element_by_css_selector('label[for="jmad-instrument"]'))
         self.assertEqual(instrument_input.get_attribute('placeholder'), 'i.e. trumpet')
 
-        artist_input = self.browser.find_element_by_css_selector(
-            'input#jmad-artist')
-        self.assertIsNotNone(self.browser.find_element_by_css_selector(
-            'label[for="jmad-artist"]'))
+        artist_input = self.browser.find_element_by_css_selector('input#jmad-artist')
+        self.assertIsNotNone(self.browser.find_element_by_css_selector('label[for="jmad-artist"]'))
         self.assertEqual(artist_input.get_attribute('placeholder'), 'i.e. Davis')
 
         # Typing the name of the instrument and click the submit button
@@ -71,36 +67,33 @@ class StudentTestCase(LiveServerTestCase):
 
         # Adding a particular artist in search query and
         # get more manageable result
-        second_artist_input = self.browser.find_element_by_css_selector(
-            'input#jmad-artist')
+        second_artist_input = self.browser.find_element_by_css_selector('input#jmad-artist')
         second_artist_input.send_keys('Cannonball Adderley')
         self.browser.find_element_by_css_selector('form button').click()
 
-        second_search_result = self.find_search_results()
-        self.assertEqual(len(second_search_result), 2)
+        second_search_results = self.find_search_results()
+        self.assertEqual(len(second_search_results), 2)
 
         # Clicking on search result
-        second_search_result[0].click()
+        second_search_results[0].click()
 
         # Redirecting to solo detail view
-        self.assertEqual(
-            self.browser.current_url,
-            '{}/solos/2'.format(self.live_server_url))
+        self.assertEqual(self.browser.current_url, '{}/solos/7/'.format(self.live_server_url))
 
         # Seeing the artist name
         self.assertEqual(
             self.browser.find_element_by_css_selector('#jmad-artist').text,
             'Cannonball Adderley')
 
-        # Seeing the instrument
-        self.assertEqual(
-            self.browser.find_element_by_css_selector('#jmad-instrument').text,
-            'saxophone')
-
         # Seeing the track
         self.assertEqual(
             self.browser.find_element_by_css_selector('#jmad-track').text,
             'All Blues')
+
+        # Seeing the instrument
+        self.assertEqual(
+            self.browser.find_element_by_css_selector('#jmad-album').text,
+            'Kind of Blue')
 
         # Seeing artist start and end time of the show
         self.assertEqual(
