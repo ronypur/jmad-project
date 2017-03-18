@@ -82,23 +82,26 @@ class StudentTestCase(LiveServerTestCase):
         # Clicking on search result
         second_search_results[0].click()
 
-        # Redirecting to solo detail view
-        self.assertEqual(self.browser.current_url, '{}/solos/7/'.format(self.live_server_url))
+        # On the solo page
+        self.assertEqual(
+            self.browser.current_url,
+            '{}/recordings/kind-of-blue/all-blues/cannonball-adderley/'.format(self.live_server_url)
+        )
 
         # Seeing the artist name
         self.assertEqual(
             self.browser.find_element_by_css_selector('#jmad-artist').text,
             'Cannonball Adderley')
 
-        # Seeing the track
+        # Seeing the track title (with count of solo)
         self.assertEqual(
             self.browser.find_element_by_css_selector('#jmad-track').text,
-            'All Blues')
+            'All Blues [2 solos]')
 
-        # Seeing the instrument
+        # Seeing the album
         self.assertEqual(
             self.browser.find_element_by_css_selector('#jmad-album').text,
-            'Kind of Blue')
+            'Kind of Blue [3 tracks]')
 
         # Seeing artist start and end time of the show
         self.assertEqual(
