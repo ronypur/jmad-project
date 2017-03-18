@@ -67,5 +67,5 @@ class SoloViewTestCase(SolosBaseTestCase):
             'Rich'
         )
 
-        with self.assertTemplateUsed('solos/solo-detail.html'):
+        with self.assertTemplateUsed('solos/solo_detail.html'):
             response.render()
