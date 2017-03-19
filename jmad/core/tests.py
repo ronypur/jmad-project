@@ -143,10 +143,10 @@ class StudentTestCase(LiveServerTestCase):
         # Seeing artist start and end time of the show
         self.assertEqual(
             self.browser.find_element_by_css_selector('#jmad-start-time').text,
-            '2:06')
+            '4:05')
         self.assertEqual(
             self.browser.find_element_by_css_selector('#jmad-end-time').text,
-            '4:01')
+            '6:04')
 
     def test_staff_can_add_content(self):
         """Tests that a 'staff' user can access the admin and adds Albums, Tracks, and Solos"""
@@ -186,15 +186,15 @@ class StudentTestCase(LiveServerTestCase):
         album_links[0].click()
         self.assertEqual(
             self.browser.find_element_by_link_text('Know What I Mean?').get_attribute('href'),
-            self.live_server_url + '/admin/albums/album/3/change/'
+            self.live_server_url + '/admin/albums/album/10/change/'
         )
         self.assertEqual(
             self.browser.find_element_by_link_text('Kind of Blue').get_attribute('href'),
-            self.live_server_url + '/admin/albums/album/2/change/'
+            self.live_server_url + '/admin/albums/album/9/change/'
         )
         self.assertEqual(
             self.browser.find_element_by_link_text('My Favorite Things').get_attribute('href'),
-            self.live_server_url + '/admin/albums/album/1/change/'
+            self.live_server_url + '/admin/albums/album/8/change/'
         )
 
         # Going back to the homepage, he clicks the Tracks link and sees
@@ -337,9 +337,6 @@ class StudentTestCase(LiveServerTestCase):
             self.browser.find_elements_by_css_selector('#result_list tr')[4].text,
             'In Walked Bud Johnny Griffin 0:59-6:21'
         )
-
-        import pdb
-        pdb.set_trace()
 
         # This test is incomplete
         self.fail('incomplete test')
