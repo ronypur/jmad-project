@@ -134,5 +134,52 @@ class StudentTestCase(LiveServerTestCase):
             self.browser.find_element_by_css_selector('#jmad-end-time').text,
             '4:01')
 
+    def test_staff_can_add_content(self):
+        """Tests that a 'staff' user can access the admin and adds Albums, Tracks, and Solos"""
+        # John would like to add a record and a number of solos to JMAD.
+        # He visits the admin site
+        admin_root = self.browser.get(self.live_server_url + '/admin/')
+
+        # He can tell he's in the right place because of the page title
+        self.assertEqual(self.browser.title, 'Log in | Django site admin')
+
         # This test is incomplete
         self.fail('incomplete test')
+
+        # He enters his username and password and submits the form to log in
+
+        # He sees links to Albums, Tracks, and Solos
+
+        # He clicks on Albums and sees all of the Albums that have been
+        # added so far
+
+        # Going back to the homepage, he clikcs the Tracks link and sees
+        # the Tracks that have been added. They're ordered first by Album,
+        # then by the track number
+
+        # He adds track to an album that already exists
+
+        # He adds another track, this time on an album that is not in JMAD yet
+
+        # After adding the basic info, he clikcs on the plus sign
+        # to add a new album
+
+        # Fhe focus shifts to the newly opened window, where
+        # he sees an Album form
+
+        # After creating the Album , he goes back to finish the Track
+
+        # He goes back to the root of the admin site and clicks on 'Solos'
+
+        # He sees Solos listed by Album, then Tracks, then start time
+
+        # He added a Solo to a Track  tha already exists
+
+        # He then adds a Solo for which the Track and Album
+        # do not yet exists
+
+        # He adds Track from the Solo page
+
+        # He adds Album from the Track popup
+
+        # He finishes up both parent objects, and save the Solo
