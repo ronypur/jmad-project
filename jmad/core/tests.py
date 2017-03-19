@@ -21,8 +21,8 @@ class StudentTestCase(LiveServerTestCase):
             album=self.album1
         )
         self.solo1 = Solo.objects.create(
-            instrument='saxophone', artist='Jhon Coltrane',
-            track=self.track1, slug='jhon-coltrane'
+            instrument='saxophone', artist='John Coltrane',
+            track=self.track1, slug='john-coltrane'
         )
 
         self.album2 = Album.objects.create(
@@ -34,8 +34,8 @@ class StudentTestCase(LiveServerTestCase):
         )
         self.solo2 = Solo.objects.create(
             instrument='saxophone', artist='Cannonball Adderley',
-            track=self.track2, start_time='2:06',
-            end_time='4:01', slug='cannonball-adderley'
+            track=self.track2, start_time='4:05',
+            end_time='6:04', slug='cannonball-adderley'
         )
 
         self.album3 = Album.objects.create(
@@ -56,7 +56,8 @@ class StudentTestCase(LiveServerTestCase):
         )
         self.solo4 = Solo.objects.create(
             instrument='trumpet', artist='Miles Davis',
-            track=self.track2, slug='miles-davis'
+            track=self.track2, slug='miles-davis',
+            start_time='1:46', end_time='4:04'
         )
 
         self.track5 = Track.objects.create(
@@ -81,7 +82,7 @@ class StudentTestCase(LiveServerTestCase):
     def test_student_find_solos(self):
         """Test that a student can search for solos"""
         # Visit homepage of JMAD
-        homepage = self.browser.get(self.live_server_url + '/')
+        self.browser.get(self.live_server_url + '/')
 
         # JMAD shown in the homepage heading
         brand_element = self.browser.find_element_by_css_selector('.navbar-brand')
@@ -151,7 +152,7 @@ class StudentTestCase(LiveServerTestCase):
         """Tests that a 'staff' user can access the admin and adds Albums, Tracks, and Solos"""
         # John would like to add a record and a number of solos to JMAD.
         # He visits the admin site
-        admin_root = self.browser.get(self.live_server_url + '/admin/')
+        self.browser.get(self.live_server_url + '/admin/')
 
         # He can tell he's in the right place because of the page title
         self.assertEqual(self.browser.title, 'Log in | Django site admin')
@@ -210,21 +211,69 @@ class StudentTestCase(LiveServerTestCase):
         self.assertEqual(track_rows[5].text, 'My Favorite Things My Favorite Things -')
 
         # He adds track to an album that already exists
+        self.browser.find_element_by_link_text('ADD TRACK').click()
+
+        track_form = self.browser.find_element_by_id('track_form')
+
+        track_form.find_element_by_name('name').send_keys('So What')
+        track_form.find_element_by_name('album').find_elements_by_tag_name('option')[1].click()
+        track_form.find_element_by_name('track_number').send_keys(1)
+        track_form.find_element_by_name('slug').send_keys('so-what')
+        track_form.find_elements_by_css_selector('.submit-row input')[0].click()
+
+        self.assertEqual(
+            self.browser.find_elements_by_css_selector('#result_list tr')[1].text,
+            'Kind of Blue So What 1'
+        )
 
         # He adds another track, this time on an album that is not in JMAD yet
+        self.browser.find_element_by_link_text('ADD TRACK').click()
 
-        # After adding the basic info, he clikcs on the plus sign
+        track_form = self.browser.find_element_by_id('track_form')
+
+        track_form.find_element_by_name('name').send_keys('My Funny Valentine')
+
+        # After adding the basic info, he clicks on the plus sign
         # to add a new album
+        track_form.find_element_by_id('add_id_album').click()
 
         # Fhe focus shifts to the newly opened window, where
         # he sees an Album form
+        self.browser.switch_to.window(self.browser.window_handles[1])
+
+        album_form = self.browser.find_element_by_id('album_form')
+
+        album_form.find_element_by_name('name').send_keys('Cookin\'')
+        album_form.find_element_by_name('artist').send_keys('Miles Davis Quintet')
+        album_form.find_element_by_name('slug').send_keys('cookin')
+        album_form.find_element_by_css_selector('.submit-row input').click()
 
         # After creating the Album , he goes back to finish the Track
+        self.browser.switch_to.window(self.browser.window_handles[0])
+
+        track_form = self.browser.find_element_by_id('track_form')
+
+        track_form.find_element_by_name('track_number').send_keys(1)
+        track_form.find_element_by_name('slug').send_keys('my-funny-valentine')
+        track_form.find_elements_by_css_selector('.submit-row input')[0].click()
+
+        self.assertEqual(
+            self.browser.find_elements_by_css_selector('#result_list tr')[1].text,
+            'Cookin\' My Funny Valentine 1'
+        )
 
         # He goes back to the root of the admin site and clicks on 'Solos'
+        self.browser.find_element_by_css_selector('#site-name a').click()
+        self.browser.find_element_by_link_text('Solos').click()
 
         # He sees Solos listed by Album, then Tracks, then start time
+        solo_rows = self.browser.find_elements_by_css_selector('#result_list tr')
 
+        self.assertEqual(solo_rows[1].text, 'All Blues Miles Davis 1:46-4:04')
+        self.assertEqual(solo_rows[2].text, 'All Blues Cannonball Adderley 4:05-6:04')
+        self.assertEqual(solo_rows[3].text.strip(), 'Waltz for Debby Cannonball Adderley')
+        self.assertEqual(solo_rows[4].text.strip(), 'My Favorite Things John Coltrane')
+        import pdb; pdb.set_trace()
         # He added a Solo to a Track  tha already exists
 
         # He then adds a Solo for which the Track and Album
